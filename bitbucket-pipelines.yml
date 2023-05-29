@@ -1,0 +1,51 @@
+image: wagnerstephan/bitbucket-git-ftp:latest
+
+pipelines:
+  custom:
+    init-hml:
+      - step:
+          caches:
+            - node
+          script:
+            - git reset --hard origin/develop
+            - git ftp init -u "$HML_USR" -p "$HML_PWD" ftp://$HML_FTP$HML_FOLDER -vv
+    init-prd:
+      - step:
+          caches:
+            - node
+          script:
+            - git reset --hard origin/master
+            - git ftp init -u "$PRD_USR" -p "$PRD_PWD" ftp://$PRD_FTP$PRD_FOLDER -vv
+    deploy-hml:
+      - step:
+          caches:
+            - node
+          script:
+            - git reset --hard origin/develop
+            - git ftp push -u "$HML_USR" -p "$HML_PWD" ftp://$HML_FTP$HML_FOLDER -vv --changed-only
+    deploy-prd:
+      - step:
+          caches:
+            - node
+          script:
+            - git reset --hard origin/master
+            - git ftp push -u "$PRD_USR" -p "$PRD_PWD" ftp://$PRD_FTP$PRD_FOLDER -vv --changed-only
+  branches:
+    develop:
+      - step:
+          name: Deploy HML
+          deployment: staging
+          caches:
+            - node
+          script:
+            - git reset --hard
+            - git ftp push -u "$HML_USR" -p "$HML_PWD" ftp://$HML_FTP$HML_FOLDER -vv --changed-only
+    master:
+      - step:
+          name: Deploy PRD
+          deployment: production
+          caches:
+            - node
+          script:
+            - git reset --hard
+            - git ftp push -u "$PRD_USR" -p "$PRD_PWD" ftp://$PRD_FTP$PRD_FOLDER -vv --changed-only

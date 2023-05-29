@@ -1,0 +1,15 @@
+# Projetos em Wordpress
+wp-config.php
+
+# Arquivo do Apache de Configuração
+.htaccess
+
+# Arquivos de Pipeline
+bitbucket-pipelines.yml
+.gitlab-ci.yml
+
+# Arquivos do Git
+.gitignore
+
+# Git FTP Ignore
+.git-ftp-ignore

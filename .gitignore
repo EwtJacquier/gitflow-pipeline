@@ -1,0 +1,11 @@
+# Arquivos do MacOS
+.DS_Store
+
+# Arquivos do Windows
+Thumbs.db
+
+# Arquivos de Log
+*.log
+
+# Arquivos Executáveis
+*.exe
